@@ -15,8 +15,9 @@ app.post("/process-orders", (req, res) => {
   const result = processOrders(orders.orderIds);
   if (result.length > 0) {
     res.json({ unFulfilledOrders: result });
+  } else {
+    res.json({ status: "all order was fulfilled successfuly!" });
   }
-  res.json({ status: "all order was fulfilled successfuly!" });
 });
 
 app.listen(5000, () => console.log("Server is running"));
