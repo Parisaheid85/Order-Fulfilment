@@ -18,8 +18,10 @@ const processOrders = (orderIds) => {
 const fullfillTheOrder = (orderIds) => {
   return orderIds.filter((orderId) => {
     const order = getOrder(orderId);
-    const ordersThatCannotBeFulfilled =
-      getOrdersThatCannotBeFulfilled(orderIds);
+    const ordersThatCannotBeFulfilled = getOrdersThatCannotBeFulfilled(
+      orderIds,
+      order
+    );
 
     // if the availableQuantityInWarehouse includes items that cannot be fulfilled, the entire order will be marked as "Unfulfilled"
     if (ordersThatCannotBeFulfilled.length > 0) {
@@ -55,7 +57,7 @@ const reOrderIfUnderTreshold = (orderIds) => {
   });
 };
 
-const getOrdersThatCannotBeFulfilled = (orderId) => {
+const getOrdersThatCannotBeFulfilled = (orderId, order) => {
   return order.items.filter((item) => {
     const product = getProduct(item.productId);
     const availableQuantityInWarehouse = product.quantityOnHand;
